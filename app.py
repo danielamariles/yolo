@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Main page heading
-st.title("Object Detection And Tracking using YOLOv8")
+st.title("Proyecto feria de la ciencia -Detección de objetos - Isabella Amariles & Celeste Garcia")
 
 # Sidebar
 st.sidebar.header("ML Model Config")
