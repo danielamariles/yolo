@@ -156,6 +156,9 @@ def play_rtsp_stream(conf, model):
             st.sidebar.error("Error loading RTSP stream: " + str(e))
 
 
+import cv2
+import streamlit as st
+
 def play_webcam(conf, model):
     """
     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
@@ -170,27 +173,33 @@ def play_webcam(conf, model):
     Raises:
         None
     """
-    source_webcam = settings.WEBCAM_PATH
-    is_display_tracker, tracker = display_tracker_options()
+    source_webcam = 0  # Cambia esto según la ruta o índice de tu cámara
+    is_display_tracker, tracker = display_tracker_options()  # Asegúrate de definir esta función
+
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_webcam)
             st_frame = st.empty()
-            while (vid_cap.isOpened()):
+            while vid_cap.isOpened():
                 success, image = vid_cap.read()
                 if success:
-                    _display_detected_frames(conf,
-                                             model,
-                                             st_frame,
-                                             image,
-                                             is_display_tracker,
-                                             tracker,
-                                             )
+                    _display_detected_frames(conf, model, st_frame, image, is_display_tracker, tracker)  # Asegúrate de definir esta función
                 else:
-                    vid_cap.release()
                     break
         except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
+            st.sidebar.error(f"Error loading video: {e}")
+        finally:
+            vid_cap.release()
+            cv2.destroyAllWindows()
+
+def display_tracker_options():
+    # Ejemplo de implementación de la función
+    return True, None
+
+def _display_detected_frames(conf, model, st_frame, image, is_display_tracker, tracker):
+    # Ejemplo de implementación de la función
+    st_frame.image(image, channels="BGR")  # Solo para demostrar; reemplaza con tu lógica de detección
+
 
 
 def play_stored_video(conf, model):
