@@ -43,27 +43,7 @@ DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
 SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
 
 # Webcam
-import streamlit as st
-import cv2
-
-# Configurar el índice de la cámara
-camera_index = 0
-cap = cv2.VideoCapture(camera_index)
-
-if not cap.isOpened():
-    st.error("No se puede abrir la cámara.")
-else:
-    st.write("Cámara abierta correctamente.")
-    
-# Mostrar la cámara en la aplicación Streamlit
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        st.error("Error al capturar el video.")
-        break
-    st.image(frame, channels='BGR')
-    
-cap.release()
+WEBCAM_PATH = 0
 
 
 
