@@ -173,32 +173,27 @@ def play_webcam(conf, model):
     Raises:
         None
     """
-    source_webcam = 0  # Cambia esto según la ruta o índice de tu cámara
-    is_display_tracker, tracker = display_tracker_options()  # Asegúrate de definir esta función
-
+    source_webcam = settings.WEBCAM_PATH
+    is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_webcam)
             st_frame = st.empty()
-            while vid_cap.isOpened():
+            while (vid_cap.isOpened()):
                 success, image = vid_cap.read()
                 if success:
-                    _display_detected_frames(conf, model, st_frame, image, is_display_tracker, tracker)  # Asegúrate de definir esta función
+                    _display_detected_frames(conf,
+                                             model,
+                                             st_frame,
+                                             image,
+                                             is_display_tracker,
+                                             tracker,
+                                             )
                 else:
+                    vid_cap.release()
                     break
         except Exception as e:
-            st.sidebar.error(f"Error loading video: {e}")
-        finally:
-            vid_cap.release()
-            cv2.destroyAllWindows()
-
-def display_tracker_options():
-    # Ejemplo de implementación de la función
-    return True, None
-
-def _display_detected_frames(conf, model, st_frame, image, is_display_tracker, tracker):
-    # Ejemplo de implementación de la función
-    st_frame.image(image, channels="BGR")  # Solo para demostrar; reemplaza con tu lógica de detección
+            st.sidebar.error("Error loading video: " + str(e))
 
 
 
