@@ -43,6 +43,9 @@ DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
 SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
 
 # Webcam
+import streamlit as st
+import cv2
+
 # Intentar diferentes índices, por ejemplo, 1, 2, etc.
 for i in range(3):
     cap = cv2.VideoCapture(i)
@@ -52,4 +55,5 @@ for i in range(3):
     cap.release()
 else:
     st.error("No se encontró ninguna cámara.")
+
 
