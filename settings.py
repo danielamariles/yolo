@@ -43,4 +43,13 @@ DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
 SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
 
 # Webcam
-WEBCAM_PATH = 0
+# Intentar diferentes índices, por ejemplo, 1, 2, etc.
+for i in range(3):
+    cap = cv2.VideoCapture(i)
+    if cap.isOpened():
+        st.write(f"Cámara encontrada en el índice {i}")
+        break
+    cap.release()
+else:
+    st.error("No se encontró ninguna cámara.")
+
