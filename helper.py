@@ -3,6 +3,7 @@ import streamlit as st
 import cv2
 import yt_dlp
 import settings
+import yt_dlp as youtube_dl
 
 
 def load_model(model_path):
@@ -62,15 +63,13 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
                    )
 
 
-def get_youtube_stream_url(youtube_url):
-    ydl_opts = {
-        'format': 'best[ext=mp4]',
-        'no_warnings': True,
-        'quiet': True
-    }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(youtube_url, download=False)
-        return info['url']
+ydl_opts = {
+    'format': 'bestvideo+bestaudio/best',  # Ajusta esto según los formatos disponibles
+    # Otros opciones
+}
+
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([video_url])
 
 
 def play_youtube_video(conf, model):
