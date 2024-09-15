@@ -46,14 +46,24 @@ SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
 import streamlit as st
 import cv2
 
-# Intentar diferentes índices, por ejemplo, 1, 2, etc.
-for i in range(3):
-    cap = cv2.VideoCapture(i)
-    if cap.isOpened():
-        st.write(f"Cámara encontrada en el índice {i}")
-        break
-    cap.release()
+# Configurar el índice de la cámara
+camera_index = 0
+cap = cv2.VideoCapture(camera_index)
+
+if not cap.isOpened():
+    st.error("No se puede abrir la cámara.")
 else:
-    st.error("No se encontró ninguna cámara.")
+    st.write("Cámara abierta correctamente.")
+    
+# Mostrar la cámara en la aplicación Streamlit
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        st.error("Error al capturar el video.")
+        break
+    st.image(frame, channels='BGR')
+    
+cap.release()
+
 
 
